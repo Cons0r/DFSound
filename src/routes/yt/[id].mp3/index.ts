@@ -1,17 +1,17 @@
-import ytdl from 'youtube-dl-exec'
+import ytdl from 'ytdl-core'
+
+function urlFromID(id: string) {
+    return `https://youtu.be/${id}`
+}
+
+async function getVideoUrl(id: string) {
+    const info = await ytdl.getInfo(urlFromID(id))
+    const data = ytdl.chooseFormat(info.formats, { quality: "highestaudio" })
+    return data.url
+}
 
 export async function GET({ params: { id } }: { params: { id: string } }) {
-    const output = await ytdl(`https://youtu.be/${id}`, {
-        dumpJson: true,
-        noWarnings: true,
-        callHome: false,
-        noCheckCertificate: true,
-        preferFreeFormats: true,
-        youtubeSkipDashManifest: true,
-        format: "bestaudio"
-    })
-
     return {
-        body: (await fetch(output.url)).body
+        body: (await fetch(await getVideoUrl(id))).body
     }
 }

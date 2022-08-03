@@ -29,6 +29,6 @@
   "type": "module",
   "dependencies": {
     "@macfja/svelte-persistent-store": "^1.2.0",
-    "youtube-dl-exec": "^2.1.4"
+    "ytdl-core": "^4.11.0"
   }
 }
