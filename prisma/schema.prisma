@@ -1,0 +1,36 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String   @id @default(uuid())
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  username      String   @unique
+  passwordHash  String
+  userAuthToken String   @unique @default(cuid())
+  plots         Plot[]
+}
+
+model Plot {
+  id     Int     @id
+  name   String
+  owner  User    @relation(fields: [ownerId], references: [id])
+  ownerId String
+  sounds Sound[]
+}
+
+model Sound {
+  id        String @id @unique @default(cuid())
+  youtubeid String
+  plot      Plot   @relation(fields: [plotId], references: [id])
+  plotId    Int
+}
