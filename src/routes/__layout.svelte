@@ -1,4 +1,5 @@
 <script>
+  import { page } from "$app/stores";
   import { toggle, theme } from "$lib/theme";
   import { onMount } from "svelte";
   import "../app.css";
@@ -39,3 +40,7 @@
     </div>
   </footer>
 </div>
+
+<svelte:head>
+  <title>{$page.stuff.name || "Loading.."} | DFS</title>
+</svelte:head>

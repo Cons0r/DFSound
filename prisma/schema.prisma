@@ -21,7 +21,7 @@ model User {
 }
 
 model Plot {
-  id     Int     @id
+  id     Int     @id @unique
   name   String
   owner  User    @relation(fields: [ownerId], references: [id])
   ownerId String
@@ -30,7 +30,7 @@ model Plot {
 
 model Sound {
   id        String @id @unique @default(cuid())
-  youtubeid String
+  audiourl  String
   plot      Plot   @relation(fields: [plotId], references: [id])
   plotId    Int
 }
